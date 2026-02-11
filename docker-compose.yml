@@ -1,0 +1,26 @@
+version: '3.8'
+
+services:
+  ampclass-api:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: ampclass-api-container
+    command: python api.py
+    expose:
+      - "5000"
+    environment:
+      - VIRTUAL_HOST=ampclass-api.medellin.unal.edu.co
+      - LETSENCRYPT_HOST=ampclass-api.medellin.unal.edu.co
+      - LETSENCRYPT_EMAIL=peptools_med@unal.edu.co
+      - VIRTUAL_PORT=5000
+    networks:
+      - inverpep_default
+      - peptools_network
+    restart: unless-stopped
+
+networks:
+  inverpep_default:
+    external: true
+  peptools_network:
+    external: true
